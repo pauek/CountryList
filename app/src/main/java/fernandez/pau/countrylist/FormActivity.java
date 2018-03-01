@@ -3,6 +3,7 @@ package fernandez.pau.countrylist;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,13 +13,38 @@ public class FormActivity extends AppCompatActivity {
 
     private static final int CHOOSE_COUNTRY = 1;
     private TextView country;
+    private TextView counter;
+
+    private int cont = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("lifecycle", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
         country = (TextView) findViewById(R.id.country);
+        counter = (TextView) findViewById(R.id.counter);
+
+        counter.setText(Integer.toString(cont));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("lifecycle", "onStop");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("lifecycle", "onStart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("lifecycle", "onDestroy");
     }
 
     public void onChooseCountry(View view) {
@@ -34,5 +60,10 @@ public class FormActivity extends AppCompatActivity {
                     country.setText(data.getStringExtra("country"));
                 }
         }
+    }
+
+    public void onAdd(View view) {
+        cont++;
+        counter.setText(Integer.toString(cont));
     }
 }
